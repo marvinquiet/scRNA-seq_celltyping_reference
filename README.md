@@ -31,11 +31,12 @@ The aim of this repo is to explore what might affect the quality of reference da
 ### Resources
 
 - Datasets
-    - Mouse FC dataset
-    - Mouse pFC dataset
-    - Mouse Allen dataset
+    - Mouse FC dataset: [paper](https://doi.org/10.1016/j.cell.2018.07.028), [data](http://dropviz.org/)
+    - Mouse pFC dataset: [paper](https://doi.org/10.1038/s41467-019-12054-3), [data](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE124952) and information about clusters in saline samples only is [here](http://djeknad.pythonanywhere.com/download/)
+    - Mouse Allen dataset: [paper](https://doi.org/10.1016/j.cell.2021.04.021), [data](https://portal.brain-map.org/atlases-and-data/rnaseq/mouse-whole-cortex-and-hippocampus-10x)
 - Mouse brain performance from 50 repetitions
-    - Random seed list
+    - Accuracy/ARI/macroF1 metrics
+    - Random sample list to indicate which individual is added
 
 
 To-dos are listed and assigned through tissues. 
