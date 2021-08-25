@@ -22,13 +22,9 @@ The aim of this repo is to explore what might affect the quality of reference da
 
 ### What we want to know
 - Does add a specific individual lower down the performance or not bring benefits to the prediction?
-    - If so (most likely), what is special in this individual compared to others?
-    
-
-
-
-
-
+    - If so (most likely), what is special in this individual compared to others? For example, number of cells, biological condition, gene count distribution, mtDNA percentage and other characteristics.
+- Does add an individual from different condition may also increase the performance?
+    - We do observe that by combining individuals from different conditions can improve the performance in human PBMC experiments. But how much will it increase and what cause the increase? We need to quantify the selection of reference. 
 
 ---
 
@@ -38,5 +34,8 @@ The aim of this repo is to explore what might affect the quality of reference da
     - Mouse FC dataset
     - Mouse pFC dataset
     - Mouse Allen dataset
-- Performance from 50 datasets
+- Mouse brain performance from 50 repetitions
     - Random seed list
+
+
+To-dos are listed and assigned through tissues. 
