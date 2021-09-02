@@ -8,7 +8,7 @@ The aim of this repo is to explore what might affect the quality of reference da
 
 ---
 <img 
-    src="./FigureS9.pdf" 
+    src=".images/FigureS9.pdf" 
     raw=true
     width=400
 />
@@ -34,6 +34,7 @@ The aim of this repo is to explore what might affect the quality of reference da
     - Mouse FC dataset: [paper](https://doi.org/10.1016/j.cell.2018.07.028), [data](http://dropviz.org/)
     - Mouse pFC dataset: [paper](https://doi.org/10.1038/s41467-019-12054-3), [data](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE124952) and information about clusters in saline samples only is [here](http://djeknad.pythonanywhere.com/download/)
     - Mouse Allen dataset: [paper](https://doi.org/10.1016/j.cell.2021.04.021), [data](https://portal.brain-map.org/atlases-and-data/rnaseq/mouse-whole-cortex-and-hippocampus-10x)
+    - Human PBMC dataset: [paper](https://www.nature.com/articles/nbt.4042), [data](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE96583)
 - Mouse brain performance from 50 repetitions
     - Accuracy/ARI/macroF1 metrics
     - Random sample list to indicate which individual is added
