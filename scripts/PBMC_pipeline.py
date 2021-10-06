@@ -4,8 +4,8 @@ Configuration generation for running PBMC datasets
 
 import os, argparse
 
-from scripts import method_utils, dataloading_utils
-from scripts.process_train_test_data import *
+from pipelines import method_utils, dataloading_utils
+from preprocess.process_train_test_data import *
 
 if __name__ == "__main__":
     data_dir = "/home/wma36/gpu/data"
@@ -15,9 +15,14 @@ if __name__ == "__main__":
     parser.add_argument('data_source', help="Load which dataset",
         choices=[
             'PBMC_batch1_ind', 'PBMC_batch1_ind_major',
+            'PBMC_batch1_ind_purify_dist', 'PBMC_batch1_ind_purify_SVM',
+            'PBMC_batch1_ABC', "PBMC_batch1_ABC_purify_dist", "PBMC_batch1_ABC_purify_SVM",
             'PBMC_batch1_batchtoind', 'PBMC_batch1_multiinds', 'PBMC_batch1_multiinds_sample',
-            'PBMC_batch2', "PBMC_batch2_purify_dist", "PBMC_batch2_purify_SVM",
-            'PBMC_batch1_batch2_ind', 'PBMC_batch1_batch2_ind_major'
+            'PBMC_batch2', 'PBMC_batch2_ind', "PBMC_batch2_purify_dist", "PBMC_batch2_purify_SVM",
+            'PBMC_batch1_batch2_ind', 'PBMC_batch1_batch2_ind_major',
+            'PBMC_protocols_pbmc1', 'PBMC_protocols_batch_smart',
+            'PBMC_Zheng_FACS', 'PBMC_Zheng_FACS_curated',
+            'PBMC_cross'  ## cross PBMC datasets
             ])
 
     parser.add_argument('-m', '--method', help="Run which method",
@@ -35,10 +40,16 @@ if __name__ == "__main__":
             default=0, type=int)
 
     args = parser.parse_args()
-    if args.data_source in ["PBMC_batch1_ind", "PBMC_batch1_ABC", "PBMC_batch2", 
-            "PBMC_batch1_batchtoind", "PBMC_batch1_multiinds"
+    if args.data_source in ["PBMC_batch1_ind", "PBMC_batch1_ABC", "PBMC_batch2", 'PBMC_batch2_ind', 
+            "PBMC_batch1_batchtoind", "PBMC_batch1_multiinds", "PBMC_batch1_batch2_ind"
             ]:
-        pipeline_dir = "/home/wma36/gpu/celltyping_refConstruct/pipelines/result_PBMC_collections"
+        pipeline_dir = "/home/wma36/gpu/celltyping_refConstruct/pipelines/result_PBMC_collections/result_PBMC_batch1_inds_pairwise" ## for now, generate results under pairwise
+
+    if args.data_source in ["PBMC_protocols_pbmc1", "PBMC_protocols_batch_smart"]:
+        pipeline_dir = "/home/wma36/gpu/celltyping_refConstruct/pipelines/result_PBMC_protocols_collections"
+
+    if args.data_source in ["PBMC_Zheng_FACS", "PBMC_Zheng_FACS_curated", "PBMC_cross"]:
+        pipeline_dir = "/home/wma36/gpu/celltyping_refConstruct/pipelines/result_PBMC_Zheng_collections"
 
     result_prefix = pipeline_dir+os.sep+"result_"+args.data_source+'_'+\
         args.train+'_to_'+args.test
@@ -56,6 +67,13 @@ if __name__ == "__main__":
     if not load_ind:
         train_adata, test_adata = dataloading_utils.load_PBMC_adata(
             data_dir, result_dir, args=args)
+
+        ## whether to purify reference dataset
+        purify_method = ""
+        if "purify_dist" in args.data_source:
+            purify_method = "distance"
+        elif "purify_SVM" in args.data_source:
+            purify_method = "SVM"
 
         train_adata, test_adata = dataloading_utils.process_loaded_data(
                 train_adata, test_adata, result_dir, args=args, purify_method=purify_method)
