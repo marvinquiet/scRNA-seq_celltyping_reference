@@ -98,5 +98,9 @@ def summarize_PBMC_pairwise_result(result_dir):
             
     df.to_csv(result_dir+os.sep+'result_summary.csv')
 
+def summarize_PBMC_pairwise_result_celltype():
+    ## will need to summarize it in celltype specific accuracy
+    pass
+
 if __name__ == '__main__':
     result_dir = "/home/wma36/gpu/celltyping_refConstruct/pipelines/result_PBMC_collections/result_PBMC_batch1_inds_pairwise"
