@@ -47,50 +47,38 @@ def summarize_PBMC_pairwise_result(result_dir):
         ref_to_target = row["experiment"].replace('result_'+row["exp_type"]+'_', '')
         ref, target = ref_to_target.split('_to_')
         if row["exp_type"] == "PBMC_batch1_ind":
-            ref_list.append(ref)
-            target_list.append(target)
+            ref_list.append('batch1_'+ref)
+            target_list.append('batch1_'+target)
             effect_list.append("individual")
         if row["exp_type"] == "PBMC_batch2_ind":
+            ref_list.append('batch2'+ref)
+            target_list.append('batch2'+target)
             batch2_control_str = "control_"
             batch2_stim_str = "stimulated_"
             ## individual effects between same situations
             if batch2_control_str in ref and batch2_control_str in target:
-                ref_list.append(ref.replace(batch2_control_str, ''))
-                target_list.append(target.replace(batch2_control_str, ''))
                 effect_list.append("individual")
             if batch2_stim_str in ref and batch2_stim_str in target:
-                ref_list.append(ref.replace(batch2_stim_str, ''))
-                target_list.append(target.replace(batch2_stim_str, ''))
                 effect_list.append("individual") ## stimulated individual effect
             ## condition effect between batch2 individuals
             if batch2_control_str in ref and batch2_stim_str in target:
-                ref_list.append(ref.replace(batch2_control_str, ''))
-                target_list.append(target.replace(batch2_stim_str, ''))
                 effect_list.append("clinical")
             if batch2_stim_str in ref and batch2_control_str in target:
-                ref_list.append(ref.replace(batch2_stim_str, ''))
-                target_list.append(target.replace(batch2_control_str, ''))
                 effect_list.append("clinical")
         if row["exp_type"] == "PBMC_batch1_batch2_ind":
+            ref_list.append(ref)
+            target_list.append(target)
             batch1_str = "batch1_"
             batch2_control_str = "batch2control_"
             batch2_stim_str = "batch2stimulated_"
             ## batch effect
             if batch2_control_str in ref and batch1_str in target:
-                ref_list.append(ref.replace(batch2_control_str, ''))
-                target_list.append(target.replace(batch1_str, ''))
                 effect_list.append("batch")
             if batch1_str in ref and batch2_control_str in target:
-                ref_list.append(ref.replace(batch1_str, ''))
-                target_list.append(target.replace(batch2_control_str, ''))
                 effect_list.append("batch")
             if batch2_stim_str in ref and batch1_str in target:
-                ref_list.append(ref.replace(batch2_stim_str, ''))
-                target_list.append(target.replace(batch1_str, ''))
                 effect_list.append("batch|clinical")
             if batch1_str in ref and batch2_stim_str in target:
-                ref_list.append(ref.replace(batch1_str, ''))
-                target_list.append(target.replace(batch2_stim_str, ''))
                 effect_list.append("batch|clinical")
     df["ref"] = ref_list
     df["target"] = target_list
@@ -104,3 +92,4 @@ def summarize_PBMC_pairwise_result_celltype():
 
 if __name__ == '__main__':
     result_dir = "/home/wma36/gpu/celltyping_refConstruct/pipelines/result_PBMC_collections/result_PBMC_batch1_inds_pairwise"
+    summarize_PBMC_pairwise_result(result_dir)
