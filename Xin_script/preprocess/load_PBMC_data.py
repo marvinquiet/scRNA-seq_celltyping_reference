@@ -104,6 +104,7 @@ def load_PBMC_batch2_data(data_dir, condition=None, ind=None):
         cond_cells = adata.obs[adata.obs["condition"] == condition].index
         adata = adata[cond_cells]
 
+    adata.obs["ind"] = adata.obs["ind"].astype(str) ## turn into string
     if ind is not None:
         ind_cells = adata.obs[adata.obs["ind"].isin(ind.split('_'))].index
         adata = adata[ind_cells]
