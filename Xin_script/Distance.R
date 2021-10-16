@@ -1,4 +1,4 @@
-suppressMessages(library(anndata,lib.loc="/home/xwei44/miniconda3/envs/celltyping/lib/R/library"))
+suppressMessages(library(anndata))
 
 print("Compute Distance")
 
