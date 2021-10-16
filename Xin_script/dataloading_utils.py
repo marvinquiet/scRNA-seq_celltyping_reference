@@ -8,7 +8,7 @@ from preprocess.process_PBMC_train_test import *
 from preprocess.process_Pancreas_train_test import *
 from preprocess.process_mousebrain_train_test import *
 
-Distance_RSCRIPT_PATH = "/projects/compbio/users/xwei44/project/celltyping_refConstruct/pipelines/result_PBMC/Distance.R"
+Distance_RSCRIPT_PATH = "scripts/Distance.R"
 
 ### === process loaded data
 def process_loaded_data(train_adata, test_adata, result_dir, 
