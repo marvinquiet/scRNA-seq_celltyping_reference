@@ -58,7 +58,7 @@ if __name__ == "__main__":
             data_dir, result_dir, args=args)
 
         train_adata, test_adata = dataloading_utils.process_loaded_data(
-                train_adata, test_adata, result_dir, args=args, scale=False)  ## no scale for calculating distance
+                train_adata, test_adata, result_dir, args=args) 
         print("Train anndata: \n", train_adata)
         print("Test anndata: \n", test_adata)
 

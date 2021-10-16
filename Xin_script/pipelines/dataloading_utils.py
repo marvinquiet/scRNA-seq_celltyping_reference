@@ -37,9 +37,9 @@ def process_loaded_data(train_adata, test_adata, result_dir,
     #tmp_df_path2 = result_dir+os.sep+"tmp_counts.csv"
     #os.system("Rscript --vanilla " + Distance_RSCRIPT_PATH + " "+ tmp_df_path2)
     
-    ## scale and analze
-    train_adata, test_adata = scale_and_visualize(train_adata, test_adata,
-        result_dir, scale=scale, plot=plot)
+    ## scale and analze, no need to scale for calculating distance
+    #train_adata, test_adata = scale_and_visualize(train_adata, test_adata,
+    #    result_dir, scale=scale, plot=plot)
 
     return train_adata, test_adata
 
