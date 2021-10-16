@@ -1,5 +1,5 @@
 ## load library for reading Anndata H5AD file and selecting top features
-suppressMessages(library(matrixStats,lib.loc="/home/xwei44/miniconda3/envs/celltyping/lib/R/library"))
+suppressMessages(library(FEAST))
 
 args <- commandArgs(trailingOnly = TRUE)
 df_dir <- args[1]

@@ -2,15 +2,17 @@
 Load data for running celltyping experiments
 '''
 import os, sys
-from result_PBMC.process_train_test_data import *
+from preprocess.process_train_test_data import *
 
-from result_PBMC.process_PBMC_train_test import *
+from preprocess.process_PBMC_train_test import *
+from preprocess.process_Pancreas_train_test import *
+from preprocess.process_mousebrain_train_test import *
 
 Distance_RSCRIPT_PATH = "/projects/compbio/users/xwei44/project/celltyping_refConstruct/pipelines/result_PBMC/Distance.R"
 
 ### === process loaded data
 def process_loaded_data(train_adata, test_adata, result_dir, 
-        args=None, scale=True, plot=True,
+        args=None, scale=True, plot=True, purify_method="", 
         save_raw=False, save_data=True):
 
     if args is None:
@@ -34,15 +36,13 @@ def process_loaded_data(train_adata, test_adata, result_dir,
     if save_data:
         save_adata(train_adata, test_adata, result_dir)
         
-    ## compute distance
-#      train_adata, test_adata = distance_computation(train_adata, test_adata, result_dir)
-
     tmp_df_path2 = result_dir+os.sep+"tmp_counts.csv"
     os.system("Rscript --vanilla " + Distance_RSCRIPT_PATH + " "+ tmp_df_path2)
     
     ## scale and analze
     train_adata, test_adata = scale_and_visualize(train_adata, test_adata,
-        result_dir, scale=scale, plot=plot)
+        result_dir, purify_method=purify_method, scale=scale, plot=plot)
+    
 
     return train_adata, test_adata
 

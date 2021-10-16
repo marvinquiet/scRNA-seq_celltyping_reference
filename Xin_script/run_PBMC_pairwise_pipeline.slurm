@@ -1,21 +1,15 @@
 #!/bin/bash
-#SBATCH --nodes=1
-#SBATCH --ntasks-per-node=1
-#SBATCH --mem-per-cpu=30G
-#SBATCH --partition=largemem
 #SBATCH --job-name=PBMC
-#SBATCH --error=job.%J.err
-#SBATCH --output=job.%J.err
-
-module purge
-module load R
+#SBATCH --output=celltyping_PBMC_pairwise_crossbatch.out
+#SBATCH --gres=gpu:1
+#SBATCH --cpus-per-task=32
 
 source ~/.bashrc
-conda activate /home/xwei44/miniconda3/envs/celltyping
+conda activate /home/wma36/gpu/envs/celltyping
 
-cd /projects/compbio/users/xwei44/project/celltyping_refConstruct/pipelines
+cd /home/wma36/gpu/celltyping_refConstruct
 
-PIPELINE_DIR="/projects/compbio/users/xwei44/project/celltyping_refConstruct/pipelines/result_PBMC"
+PIPELINE_DIR="/home/wma36/gpu/celltyping_refConstruct/pipelines"
 method="MLP"
 
 ## from https://stackoverflow.com/questions/1527049/how-can-i-join-elements-of-an-array-in-bash/53050617
@@ -56,8 +50,8 @@ for ind1 in ${batch1_inds[@]}; do
     for ind2 in ${batch2_inds[@]}; do
         batch2_ind="batch2$ind2"
         echo "$batch1_ind $batch2_ind"
-        python -m result_PBMC.PBMC_pipeline $task -m $method --select_on train --select_method F-test --train $batch1_ind --test $batch2_ind
-        python -m result_PBMC.PBMC_pipeline $task -m $method --select_on train --select_method F-test --train $batch2_ind --test $batch1_ind
+        python -m pipelines.PBMC_pipeline $task -m $method --select_on train --select_method F-test --train $batch1_ind --test $batch2_ind
+        python -m pipelines.PBMC_pipeline $task -m $method --select_on train --select_method F-test --train $batch2_ind --test $batch1_ind
     done
 done
 

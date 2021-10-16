@@ -67,7 +67,6 @@ def load_PBMC_batch2_data(data_dir, condition=None, ind=None):
     ctrl_adata.obs_names = cells[0]
     # Make sure the cell names are unique
     ctrl_adata.obs_names_make_unique(join="-")
-    
 
     ## load stim data
     stim_adata = anndata.read_mtx(data_dir+os.sep+'PBMC_demuxlet/GSM2560249_2.2.mtx').T
@@ -98,22 +97,16 @@ def load_PBMC_batch2_data(data_dir, condition=None, ind=None):
     adata.obs.index = adata.obs["barcode"]
     adata.obs.index.name = None
     adata.var.index.name = None
-    
 
     adata.obs.rename(columns={'cell': 'cell.type'}, inplace=True)
-    
-    adata.obs["ind"]=adata.obs["ind"].astype('str')
 
     if condition is not None:
-        cond_cells = adata.obs[adata.obs['condition'] == condition].index
-        print("cond_cells: \n", cond_cells)
+        cond_cells = adata.obs[adata.obs["condition"] == condition].index
         adata = adata[cond_cells]
 
     if ind is not None:
-        ind_cells = adata.obs[adata.obs['ind'].isin(ind.split('_'))].index
-        print("ind_cells: \n", ind_cells)
+        ind_cells = adata.obs[adata.obs["ind"].isin(ind.split('_'))].index
         adata = adata[ind_cells]
-        
     return adata
 
 

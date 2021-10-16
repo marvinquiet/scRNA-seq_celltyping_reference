@@ -2,16 +2,14 @@ import os, sys
 import numpy as np
 import pandas as pd
 import scipy
-import scanpy as sc
+import scanpy.api as sc
 import anndata
 
 ## plot
 import matplotlib.pyplot as plt
 
-FEAST_SC3_RSCRIPT_PATH = "/projects/compbio/users/xwei44/project/celltyping_refConstruct/pipelines/result_PBMC/FEAST_selection.R"
-FEAST_FTEST_RSCRIPT_PATH = "/projects/compbio/users/xwei44/project/celltyping_refConstruct/pipelines/result_PBMC/Ftest_selection.R"
-Distance_RSCRIPT_PATH = "/projects/compbio/users/xwei44/project/celltyping_refConstruct/pipelines/result_PBMC/Distance.R"
-
+FEAST_SC3_RSCRIPT_PATH = "scripts/FEAST_selection.R"
+FEAST_FTEST_RSCRIPT_PATH = "scripts/Ftest_selection.R"
 
 ## ---- some functions for processing data
 def process_adata(adata, min_genes=10, min_cells=10, celltype_label="cell.type"):
@@ -23,12 +21,10 @@ def process_adata(adata, min_genes=10, min_cells=10, celltype_label="cell.type")
        5. Remove cells with no labels; 
     '''
     adata.var_names=[i.upper() for i in list(adata.var_names)]#avod some genes having lower letter
- 
-    print("adata: \n", adata)
+
     ## make names unique
     adata.var_names_make_unique()
     adata.obs_names_make_unique()
-    print("adata: \n", adata)
 
     #1.pre filter cells
     # prefilter_cells(adata,min_genes=min_genes) 
@@ -58,13 +54,6 @@ def process_adata(adata, min_genes=10, min_cells=10, celltype_label="cell.type")
     cells = adata.obs.dropna(subset=[celltype_label]).index.tolist()
     adata = adata[cells]
     return adata
-
-# def distance_computation(train_adata, test_adata, result_dir):
-    
-#     tmp_df_path = result_dir+os.sep+"tmp_counts.csv"
-#     os.system("Rscript --vanilla " + Distance_RSCRIPT_PATH + " "+ tmp_df_path)
-#     return train_adata, test_adata
-
 
 def feature_selection_train_test(train_adata, test_adata, result_dir,
         gene_no=1000, select_on="test", select_method="Seurat",
@@ -261,7 +250,6 @@ def process_pipeline(train_adata, test_adata, result_dir,
     ## scale and analyze
     train_adata, test_adata = scale_and_visualize(train_adata, test_adata, result_dir,
             plot=False)
-    
     return train_adata, test_adata
 
 

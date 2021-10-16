@@ -1,9 +1,9 @@
 import anndata
 import random
 
-from result_PBMC import load_PBMC_data
-# from preprocess import load_PBMCprotocol_data
-# from preprocess import load_PBMCZheng_data
+from preprocess import load_PBMC_data
+from preprocess import load_PBMCprotocol_data
+from preprocess import load_PBMCZheng_data
 
 def process_batch1_ind(data_dir, result_dir, ind1="1154", ind2="1085", 
         celltype_gran=1):
@@ -184,8 +184,6 @@ def process_batch1_batch2_ind(data_dir, result_dir, input1, input2,
     ## curate given sub-cell types to major cell types
     train_adata = load_PBMC_data.curate_PBMC_demulx_celltypes(train_adata, celltype_gran)
     test_adata = load_PBMC_data.curate_PBMC_demulx_celltypes(test_adata, celltype_gran)
-
-    
     return train_adata, test_adata
 
 

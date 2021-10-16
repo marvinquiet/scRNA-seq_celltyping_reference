@@ -4,12 +4,12 @@ Configuration generation for running PBMC datasets
 
 import os, argparse
 
-from result_PBMC import dataloading_utils
-from result_PBMC.process_train_test_data import *
+from pipelines import method_utils, dataloading_utils
+from preprocess.process_train_test_data import *
 
 if __name__ == "__main__":
-    data_dir = "/projects/compbio/users/xwei44/project/data"
-    
+    data_dir = "/home/wma36/gpu/data"
+
     ## parse arguments
     parser = argparse.ArgumentParser(description="Celltyping pipeline.")
     parser.add_argument('data_source', help="Load which dataset",
@@ -43,7 +43,13 @@ if __name__ == "__main__":
     if args.data_source in ["PBMC_batch1_ind", "PBMC_batch1_ABC", "PBMC_batch2", 'PBMC_batch2_ind', 
             "PBMC_batch1_batchtoind", "PBMC_batch1_multiinds", "PBMC_batch1_batch2_ind"
             ]:
-        pipeline_dir = "//projects/compbio/users/xwei44/project/celltyping_refConstruct/pipelines/result_PBMC" ## for now, generate results under pairwise
+        pipeline_dir = "/home/wma36/gpu/celltyping_refConstruct/pipelines/result_PBMC_collections/result_PBMC_batch1_inds_pairwise" ## for now, generate results under pairwise
+
+    if args.data_source in ["PBMC_protocols_pbmc1", "PBMC_protocols_batch_smart"]:
+        pipeline_dir = "/home/wma36/gpu/celltyping_refConstruct/pipelines/result_PBMC_protocols_collections"
+
+    if args.data_source in ["PBMC_Zheng_FACS", "PBMC_Zheng_FACS_curated", "PBMC_cross"]:
+        pipeline_dir = "/home/wma36/gpu/celltyping_refConstruct/pipelines/result_PBMC_Zheng_collections"
 
     result_prefix = pipeline_dir+os.sep+"result_"+args.data_source+'_'+\
         args.train+'_to_'+args.test
@@ -61,12 +67,17 @@ if __name__ == "__main__":
     if not load_ind:
         train_adata, test_adata = dataloading_utils.load_PBMC_adata(
             data_dir, result_dir, args=args)
-        print("args.data_source: \n", args.data_source)
-        
-#         print("Train anndata: \n", train_adata)
-#         print("Test anndata: \n", test_adata)
+
+        ## whether to purify reference dataset
+        purify_method = ""
+        if "purify_dist" in args.data_source:
+            purify_method = "distance"
+        elif "purify_SVM" in args.data_source:
+            purify_method = "SVM"
 
         train_adata, test_adata = dataloading_utils.process_loaded_data(
-                train_adata, test_adata, result_dir, args=args)
+                train_adata, test_adata, result_dir, args=args, purify_method=purify_method)
         print("Train anndata: \n", train_adata)
         print("Test anndata: \n", test_adata)
+
+    ## method_utils.run_pipeline(args, train_adata, test_adata, data_dir, result_dir)
