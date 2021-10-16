@@ -1,6 +1,10 @@
 # ignore vi edit file
 *.swp
 
+# ignore slurm out file
+*.out
+*.err
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
