@@ -1,0 +1,34 @@
+1154 1043
+/home/wma36/miniconda3/envs/xin_env/lib/python3.9/site-packages/scanpy/api/__init__.py:3: FutureWarning: 
+
+In a future version of Scanpy, `scanpy.api` will be removed.
+Simply use `import scanpy as sc` and `import scanpy.external as sce` instead.
+
+  warnings.warn(
+Warning message:
+package ‘anndata’ was built under R version 4.1.1 
+[1] "Compute Distance"
+[1] "/home/wma36/gpu/scRNA-seq_celltyping_reference/Xin_dist_results/result_PBMC_batch1_inds_pairwise/result_PBMC_batch1_ind_1154_to_1043/F-test_1000_on_train"
+/home/wma36/miniconda3/envs/xin_env/lib/python3.9/site-packages/anndata/_core/anndata.py:1094: FutureWarning: is_categorical is deprecated and will be removed in a future version.  Use is_categorical_dtype instead
+  if not is_categorical(df_full[k]):
+/home/wma36/miniconda3/envs/xin_env/lib/python3.9/site-packages/pandas/core/arrays/categorical.py:2630: FutureWarning: The `inplace` parameter in pandas.Categorical.remove_unused_categories is deprecated and will be removed in a future version.
+  res = method(*args, **kwargs)
+   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+-1.3250  0.5529  2.8627  2.4903  4.8003  5.6849 
+1154 1079
+/home/wma36/miniconda3/envs/xin_env/lib/python3.9/site-packages/scanpy/api/__init__.py:3: FutureWarning: 
+
+In a future version of Scanpy, `scanpy.api` will be removed.
+Simply use `import scanpy as sc` and `import scanpy.external as sce` instead.
+
+  warnings.warn(
+/home/wma36/miniconda3/envs/xin_env/lib/python3.9/site-packages/anndata/_core/anndata.py:1094: FutureWarning: is_categorical is deprecated and will be removed in a future version.  Use is_categorical_dtype instead
+  if not is_categorical(df_full[k]):
+/home/wma36/miniconda3/envs/xin_env/lib/python3.9/site-packages/pandas/core/arrays/categorical.py:2630: FutureWarning: The `inplace` parameter in pandas.Categorical.remove_unused_categories is deprecated and will be removed in a future version.
+  res = method(*args, **kwargs)
+AnnData expects .obs.index to contain strings, but your first indices are: Int64Index([0, 1], dtype='int64'), …
+AnnData expects .obs.index to contain strings, but your first indices are: Int64Index([0, 1], dtype='int64'), …
+Trying to set attribute `.obs` of view, copying.
+Trying to set attribute `.obs` of view, copying.
+Warning message:
+package ‘matrixStats’ was built under R version 4.1.1 

@@ -16,7 +16,6 @@ from sklearn import metrics
 
 from random import seed
 from numpy.random import seed
-from tensorflow import set_random_seed
 
 # GPU settings and reproducible
 #os.environ["CUDA_VISIBLE_DEVICES"]="0"
@@ -25,7 +24,7 @@ from tensorflow import set_random_seed
 RANDOM_SEED=0
 seed(RANDOM_SEED)
 np.random.seed(RANDOM_SEED)
-set_random_seed(RANDOM_SEED)
+tf.random.set_seed(RANDOM_SEED) ## changed because of TF version and debugging reason
 
 ## every time reset all graphs and run something new
 tf.compat.v1.reset_default_graph()

@@ -8,8 +8,8 @@ import anndata
 ## plot
 import matplotlib.pyplot as plt
 
-FEAST_SC3_RSCRIPT_PATH = "scripts/FEAST_selection.R"
-FEAST_FTEST_RSCRIPT_PATH = "scripts/Ftest_selection.R"
+FEAST_SC3_RSCRIPT_PATH = "FEAST_selection.R"
+FEAST_FTEST_RSCRIPT_PATH = "Ftest_selection.R"
 
 ## ---- some functions for processing data
 def process_adata(adata, min_genes=10, min_cells=10, celltype_label="cell.type"):

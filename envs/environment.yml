@@ -1,4 +1,4 @@
-name: celltyping
+name: xin_env
 channels:
   - bioconda
   - defaults

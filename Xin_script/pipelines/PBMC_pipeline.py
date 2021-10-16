@@ -14,19 +14,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Celltyping pipeline.")
     parser.add_argument('data_source', help="Load which dataset",
         choices=[
-            'PBMC_batch1_ind', 'PBMC_batch1_ind_major',
-            'PBMC_batch1_ind_purify_dist', 'PBMC_batch1_ind_purify_SVM',
-            'PBMC_batch1_ABC', "PBMC_batch1_ABC_purify_dist", "PBMC_batch1_ABC_purify_SVM",
+            'PBMC_batch1_ind', 'PBMC_batch1_ind_major', 'PBMC_batch1_ABC', 
             'PBMC_batch1_batchtoind', 'PBMC_batch1_multiinds', 'PBMC_batch1_multiinds_sample',
-            'PBMC_batch2', 'PBMC_batch2_ind', "PBMC_batch2_purify_dist", "PBMC_batch2_purify_SVM",
-            'PBMC_batch1_batch2_ind', 'PBMC_batch1_batch2_ind_major',
-            'PBMC_protocols_pbmc1', 'PBMC_protocols_batch_smart',
-            'PBMC_Zheng_FACS', 'PBMC_Zheng_FACS_curated',
-            'PBMC_cross'  ## cross PBMC datasets
-            ])
+            'PBMC_batch2', 'PBMC_batch2_ind', 
+            'PBMC_batch1_batch2_ind', 'PBMC_batch1_batch2_ind_major'
+             ])
 
     parser.add_argument('-m', '--method', help="Run which method",
-        choices=['MLP', 'MLP_GO', 'MLP_CP', 'GEDFN', 'ItClust', 'SVM_RBF', 'SVM_linear', 'RF'], ## remove DFN
+        choices=['MLP', 'SVM_RBF', 'SVM_linear'],
         required=True)
     parser.add_argument('--select_on', help="Feature selection on train or test, or None of them",
         choices=['train', 'test'])
@@ -43,13 +38,7 @@ if __name__ == "__main__":
     if args.data_source in ["PBMC_batch1_ind", "PBMC_batch1_ABC", "PBMC_batch2", 'PBMC_batch2_ind', 
             "PBMC_batch1_batchtoind", "PBMC_batch1_multiinds", "PBMC_batch1_batch2_ind"
             ]:
-        pipeline_dir = "/home/wma36/gpu/celltyping_refConstruct/pipelines/result_PBMC_collections/result_PBMC_batch1_inds_pairwise" ## for now, generate results under pairwise
-
-    if args.data_source in ["PBMC_protocols_pbmc1", "PBMC_protocols_batch_smart"]:
-        pipeline_dir = "/home/wma36/gpu/celltyping_refConstruct/pipelines/result_PBMC_protocols_collections"
-
-    if args.data_source in ["PBMC_Zheng_FACS", "PBMC_Zheng_FACS_curated", "PBMC_cross"]:
-        pipeline_dir = "/home/wma36/gpu/celltyping_refConstruct/pipelines/result_PBMC_Zheng_collections"
+        pipeline_dir = "/home/wma36/gpu/scRNA-seq_celltyping_reference/Xin_dist_results/result_PBMC_batch1_inds_pairwise" ## for now, generate results under pairwise
 
     result_prefix = pipeline_dir+os.sep+"result_"+args.data_source+'_'+\
         args.train+'_to_'+args.test
@@ -68,16 +57,14 @@ if __name__ == "__main__":
         train_adata, test_adata = dataloading_utils.load_PBMC_adata(
             data_dir, result_dir, args=args)
 
-        ## whether to purify reference dataset
-        purify_method = ""
-        if "purify_dist" in args.data_source:
-            purify_method = "distance"
-        elif "purify_SVM" in args.data_source:
-            purify_method = "SVM"
-
         train_adata, test_adata = dataloading_utils.process_loaded_data(
-                train_adata, test_adata, result_dir, args=args, purify_method=purify_method)
+                train_adata, test_adata, result_dir, args=args, scale=False)  ## no scale for calculating distance
         print("Train anndata: \n", train_adata)
         print("Test anndata: \n", test_adata)
 
     ## method_utils.run_pipeline(args, train_adata, test_adata, data_dir, result_dir)
+
+    ## move distance calculation here
+    Distance_RSCRIPT_PATH = "Distance.R"
+    os.system("Rscript --vanilla " + Distance_RSCRIPT_PATH + " "+ result_dir)
+ 
