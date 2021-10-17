@@ -10,7 +10,7 @@ print(df_dir)
 ad_train <- read_h5ad(paste(df_dir,"train_adata.h5ad",sep = "/"))
 ad_test <- read_h5ad(paste(df_dir,"test_adata.h5ad",sep = "/"))
 
-cell_types <- unique(as.factor(ad_train$obs$cell.type))
+cell_types <- sort(unique(as.factor(ad_train$obs$cell.type)))
 
 method <- c("euclidean","maximum","manhattan", "canberra")
 Eucli_dist <- rep(0,length(cell_types))
