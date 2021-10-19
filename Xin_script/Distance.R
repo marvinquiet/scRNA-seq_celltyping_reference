@@ -41,7 +41,7 @@ Prop_dist[j]=dist(rbind(c,d),method = method[j])
 }
 
 Distance = c(Overall_distance, Weighted_distance, Prop_dist)
-Distance = log(Distance+0.01)
+## Distance = log(Distance+0.01)
 
 print(summary(Distance)) ## Bug fix: change to small capital print() and summary()
 
