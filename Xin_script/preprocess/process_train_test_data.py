@@ -48,7 +48,7 @@ def process_adata(adata, min_genes=10, min_cells=10, celltype_label="cell.type")
 
     #4 normalization,var.genes,log1p
     sc.pp.normalize_per_cell(adata)  ## total count equal to the median of the counts_per_cell
-    ## sc.pp.log1p(adata)
+    sc.pp.log1p(adata)
 
     ## cells with celltypes
     cells = adata.obs.dropna(subset=[celltype_label]).index.tolist()
