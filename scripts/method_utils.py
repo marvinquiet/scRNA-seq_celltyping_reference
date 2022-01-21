@@ -205,14 +205,13 @@ def run_pipeline(args, train_adata, test_adata, data_dir, result_dir):
     '''Run methods
     '''
     ## Hyperparameters for network
-    if train_adata.shape[0] >= 5000:
-        ## === parameters for mousebrain (high cell number)
-        dims = [128, 32]
-        MLP_dims = [128, 64, 32, 16, 8]
-    else:
-        ## === parameters for PBMC datasets (low cell number)
-        dims = [16]
-        MLP_dims = [64, 16]
+    #if train_adata.shape[0] >= 5000:
+    #    ## === parameters for mousebrain (high cell number)
+    #    MLP_dims = [128, 64, 32, 16, 8]
+    #else:
+    #    ## === parameters for PBMC datasets (low cell number)
+    #    MLP_dims = [64, 16]
+    MLP_dims = [64, 16]  ## Maybe a fixed MLP structure can be better?
 
     batch_size = 128
     celltype_cols = "cell.type"
